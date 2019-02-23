@@ -7,44 +7,86 @@
  * @lint-ignore-every XPLATJSCOPYRIGHT1
  */
 
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import React, {
+  Component
+} from 'react';
+import {
+  createStore,
+  applyMiddleware
+} from 'redux';
+import {
+  Provider
+} from 'react-redux';
+import ReduxThunk from 'redux-thunk';
+import {
+  createAppContainer,
+  createSwitchNavigator,
+  createMaterialTopTabNavigator,
+  createStackNavigator
+} from 'react-navigation';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
+import reducers from './src/redux/reducers';
+import HomeScreen from './src/screens/HomeScreen';
+import CreateHutangScreen from './src/screens/CreateHutangScreen';
+import CreateDataScreen from './src/screens/CreateDataScreen';
+
+const ListStack = createStackNavigator({
+  List: {
+    screen: HomeScreen,
+    navigationOptions: () => ({
+      header: null
+    })
+  },
+  CreateList: {
+    screen: CreateHutangScreen,
+    navigationOptions: () => ({
+      header: null
+    })
+  },
+  CreateData: {
+    screen: CreateDataScreen,
+    navigationOptions: () => ({
+      header: null
+    })
+  }
 });
+
+const BottomTabNavigator = createMaterialTopTabNavigator({
+  ListTab: {
+    screen: ListStack,
+    navigationOptions: () => ({
+      tabBarLabel: 'List'
+    })
+  },
+  IndividualTab: {
+    screen: HomeScreen,
+    navigationOptions: () => ({
+      tabBarLabel: 'Individual'
+    })
+  }
+}, {
+  initialRouteName: 'ListTab',
+  tabBarOptions: {
+    upperCaseLabel: false,
+    labelStyle: {
+      fontSize: 16
+    }
+  }
+});
+
+const SwitchNavigator = createSwitchNavigator({
+  Home: BottomTabNavigator
+});
+
+const AppContainer = createAppContainer(SwitchNavigator);
 
 type Props = {};
 export default class App extends Component<Props> {
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
-      </View>
+      <Provider store={createStore(reducers, {}, applyMiddleware(ReduxThunk))}>
+        <AppContainer />
+      </Provider>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
