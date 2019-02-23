@@ -21,7 +21,6 @@ import ReduxThunk from 'redux-thunk';
 import {
   createAppContainer,
   createSwitchNavigator,
-  createMaterialTopTabNavigator,
   createStackNavigator
 } from 'react-navigation';
 
@@ -34,48 +33,25 @@ const ListStack = createStackNavigator({
   List: {
     screen: HomeScreen,
     navigationOptions: () => ({
-      header: null
+      headerTitle: 'Catatan Hutang'
     })
   },
   CreateList: {
     screen: CreateHutangScreen,
     navigationOptions: () => ({
-      header: null
+      headerTitle: 'Tambah Hutang'
     })
   },
   CreateData: {
     screen: CreateDataScreen,
     navigationOptions: () => ({
-      header: null
+      headerTitle: 'Tambah Data'
     })
-  }
-});
-
-const BottomTabNavigator = createMaterialTopTabNavigator({
-  ListTab: {
-    screen: ListStack,
-    navigationOptions: () => ({
-      tabBarLabel: 'List'
-    })
-  },
-  IndividualTab: {
-    screen: HomeScreen,
-    navigationOptions: () => ({
-      tabBarLabel: 'Individual'
-    })
-  }
-}, {
-  initialRouteName: 'ListTab',
-  tabBarOptions: {
-    upperCaseLabel: false,
-    labelStyle: {
-      fontSize: 16
-    }
   }
 });
 
 const SwitchNavigator = createSwitchNavigator({
-  Home: BottomTabNavigator
+  Home: ListStack
 });
 
 const AppContainer = createAppContainer(SwitchNavigator);
