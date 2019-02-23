@@ -6,3 +6,4 @@ export const CLEAR_FORM = 'clear_form';
 export const TAMBAH_ANAK = 'tambah_anak';
 export const TAMBAH_MAKANAN = 'tambah_makanan';
 export const TAMBAH_MINUMAN = 'tambah_minuman';
+export const GET_HUTANG = 'get_hutang';
