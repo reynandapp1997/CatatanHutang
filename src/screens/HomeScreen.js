@@ -2,16 +2,52 @@ import React, {
   Component
 } from 'react';
 import {
-  View
+  View,
+  FlatList,
+  Text
 } from 'react-native';
 import ActionButton from 'react-native-action-button';
 import IconFa from 'react-native-vector-icons/FontAwesome';
 import IconMi from 'react-native-vector-icons/MaterialIcons';
+import { connect } from 'react-redux';
+
+import { styles } from '../constants/styles';
+import CardComponent from '../components/CardComponent';
+import { getHutang } from '../redux/actions';
 
 class HomeScreen extends Component {
+  componentDidMount() {
+    this.getData();
+  }
+
+  getData() {
+    this.props.getHutang();
+  }
+
+  renderItem(item) {
+    return (
+      <CardComponent>
+        <Text style={styles.label}>{item.item.nama}</Text>
+        <Text style={{ marginLeft: 8 }}>{item.item.makanan}</Text>
+        <Text style={{ marginLeft: 8 }}>{item.item.minuman}</Text>
+        <Text style={{ marginLeft: 8 }}>{`Rp. ${item.item.total_harga}`}</Text>
+      </CardComponent>
+    );
+  }
+
   render() {
     return (
       <View style={{ flex: 1, padding: 8 }} >
+        <FlatList
+          data={this.props.hutang}
+          keyExtractor={(item) => item.index}
+          renderItem={this.renderItem.bind(this)}
+          ListEmptyComponent={() => (
+            <View style={{ alignItems: 'center', }}>
+              <Text>Tidak ada hutang</Text>
+            </View>
+          )}
+        />
         <ActionButton buttonColor='red'>
         <ActionButton.Item size={48} buttonColor='#9b59b6' title='Tambah Hutang' onPress={() => this.props.navigation.navigate('CreateList')}>
               <IconMi color='white' size={20} name="info" />
@@ -25,4 +61,10 @@ class HomeScreen extends Component {
   }
 }
 
-export default HomeScreen;
+const mapStateToProps = state => ({
+  hutang: state.hutang.hutang.hutang
+});
+
+export default connect(mapStateToProps, {
+  getHutang
+})(HomeScreen);
