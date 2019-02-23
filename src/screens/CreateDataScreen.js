@@ -78,6 +78,7 @@ class CreateDataScreen extends Component {
     AsyncStorage.setItem('dataAnak', JSON.stringify(gg))
       .then(() => {
         this.showAlert('Berhasil menambah data anak');
+        this.props.clearForm();
         this.getData();
       })
       .catch(() => {
@@ -96,6 +97,7 @@ class CreateDataScreen extends Component {
     AsyncStorage.setItem('dataMakanan', JSON.stringify(gg))
       .then(() => {
         this.showAlert('Berhasil menambah data makanan');
+        this.props.clearForm();
         this.getData();
       })
       .catch(() => {
@@ -114,6 +116,7 @@ class CreateDataScreen extends Component {
     AsyncStorage.setItem('dataMinuman', JSON.stringify(gg))
       .then(() => {
         this.showAlert('Berhasil menambah data minuman');
+        this.props.clearForm();
         this.getData();
       })
       .catch(() => {
