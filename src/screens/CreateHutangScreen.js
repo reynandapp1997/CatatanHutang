@@ -8,13 +8,15 @@ import {
   ScrollView,
   Picker,
   AsyncStorage,
-  TextInput
+  TextInput,
+  Alert
 } from 'react-native';
 import { connect } from 'react-redux';
 
 import {
   onChangeForm,
-  clearForm
+  clearForm,
+  getHutang
 } from '../redux/actions';
 import {
   NAMA,
@@ -35,6 +37,9 @@ class CreateHutangScreen extends Component {
       },
       dataMinuman: {
         minuman: []
+      },
+      dataHutang: {
+        hutang: []
       }
     };
   }
@@ -66,7 +71,11 @@ class CreateHutangScreen extends Component {
     this.props.clearForm();
   }
 
-  tambahHutang() {
+  async tambahHutang() {
+    const data = await AsyncStorage.getItem('dataHutang');
+    if (data) {
+      this.setState({ dataHutang: JSON.parse(data) });
+    }
     const hutang = {
       nama: this.props.form.nama,
       makanan: this.props.form.makanan,
@@ -74,7 +83,30 @@ class CreateHutangScreen extends Component {
       total_harga: this.props.form.total_harga,
       createdAt: new Date()
     };
-    console.log(hutang);
+    const dataHutang = this.state.dataHutang;
+    dataHutang.hutang.push(hutang);
+    this.setState({ dataHutang });
+    AsyncStorage.setItem('dataHutang', JSON.stringify(this.state.dataHutang))
+    .then(() => {
+      this.showAlert('Berhasil menambah data hutang');
+      this.resetForm();
+      this.props.getHutang();
+    })
+    .catch(() => {
+      this.showAlert('Gagal menambah data hutang');
+    });
+  }
+
+  showAlert(msg) {
+    Alert.alert(
+      '',
+      msg,
+      [{
+        text: 'Ok',
+        onPress: () => null
+      }], {
+        cancelable: false
+      });
   }
   
   render() {
@@ -142,12 +174,13 @@ class CreateHutangScreen extends Component {
           <TextInput
             style={styles.form}
             editable={false}
-            value={`Rp. ${this.props.form.total_harga.toString()},00`}
+            value={`Rp. ${this.props.form.total_harga.toString()}`}
           />
         </View>
         <Button title='Tambah' onPress={() => { this.tambahHutang(); }} />
         <View style={{ height: 32 }} />
         <Button title='Reset' onPress={() => { this.resetForm(); }} />
+        <View style={{ height: 32 }} />
       </ScrollView>
     );
   }
@@ -159,5 +192,6 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, {
   onChangeForm,
-  clearForm
+  clearForm,
+  getHutang
 })(CreateHutangScreen);
