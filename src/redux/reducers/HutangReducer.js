@@ -1,11 +1,21 @@
+import { GET_HUTANG } from '../../constants/strings';
+
 export default (state = {
   hutang: {}
 }, action) => {
   switch (action.type) {
-    case 'hutang':
+    case GET_HUTANG:
+      if (action.payload) {
+        return {
+          ...state,
+          hutang: action.payload
+        };
+      }
       return {
         ...state,
-        hutang: ''
+        hutang: {
+          hutang: []
+        }
       };
     default:
       return state;
