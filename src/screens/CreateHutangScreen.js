@@ -165,11 +165,13 @@ class CreateHutangScreen extends Component {
             style={styles.form}
             editable={false}
             value={this.props.form.makanan}
+            multiline
           />
           <TextInput
             style={styles.form}
             editable={false}
             value={this.props.form.minuman}
+            multiline
           />
           <TextInput
             style={styles.form}
