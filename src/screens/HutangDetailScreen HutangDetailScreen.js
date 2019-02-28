@@ -70,7 +70,7 @@ class HutangDetailScreen extends Component {
       <CardComponent onPress={() => this.props.navigation.navigate('HutangDetail')}>
         <Text style={{ marginLeft: 8 }}><Text style={styles.label}>Makanan yang di pesan : </Text>{'\n'}{item.item.makanan}</Text>
         <Text style={{ marginLeft: 8 }}><Text style={styles.label}>Minuman yang di pesan : </Text>{'\n'}{item.item.minuman}</Text>
-        <Text style={{ marginLeft: 8 }}><Text style={styles.label}>Total : </Text>{'\n'}{`Rp. ${item.item.total_harga}`}</Text>
+        <Text style={{ marginLeft: 8 }}><Text style={styles.label}>Total : </Text>{'\n'}{`Rp. ${(item.item.total_harga).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`}</Text>
         <Text style={{ marginLeft: 8 }}><Text style={styles.label}>Tanggal Pembelian : </Text>{'\n'}{moment(date).local().locale('id').format('dddd, DD-MM-YYYY')}</Text>
       </CardComponent>
     );

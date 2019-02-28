@@ -27,13 +27,13 @@ class HomeScreen extends Component {
 
   renderItem(item) {
     const date = new Date(item.item.createdAt);
-    const nama = item.item.nama;
+    const nama = item.item.nama;    
     return (
       <CardComponent onPress={() => this.props.navigation.navigate('HutangDetail', { nama })}>
         <Text style={styles.nama}>{item.item.nama}</Text>
         <Text style={{ marginLeft: 8 }}><Text style={styles.label}>Makanan yang di pesan : </Text>{'\n'}{item.item.makanan}</Text>
         <Text style={{ marginLeft: 8 }}><Text style={styles.label}>Minuman yang di pesan : </Text>{'\n'}{item.item.minuman}</Text>
-        <Text style={{ marginLeft: 8 }}><Text style={styles.label}>Total : </Text>{'\n'}{`Rp. ${item.item.total_harga}`}</Text>
+        <Text style={{ marginLeft: 8 }}><Text style={styles.label}>Total : </Text>{'\n'}{`Rp. ${(item.item.total_harga).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`}</Text>
         <Text style={{ marginLeft: 8 }}><Text style={styles.label}>Tanggal Pembelian : </Text>{'\n'}{moment(date).local().locale('id').format('dddd, DD-MM-YYYY')}</Text>
       </CardComponent>
     );
