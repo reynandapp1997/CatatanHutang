@@ -10,6 +10,8 @@ import ActionButton from 'react-native-action-button';
 import IconFa from 'react-native-vector-icons/FontAwesome';
 import IconMi from 'react-native-vector-icons/MaterialIcons';
 import { connect } from 'react-redux';
+import moment from 'moment';
+import 'moment/locale/id';
 
 import { styles } from '../constants/styles';
 import CardComponent from '../components/CardComponent';
@@ -25,12 +27,14 @@ class HomeScreen extends Component {
   }
 
   renderItem(item) {
+    const date = new Date(item.item.createdAt);
     return (
       <CardComponent>
         <Text style={styles.label}>{item.item.nama}</Text>
         <Text style={{ marginLeft: 8 }}>{item.item.makanan}</Text>
         <Text style={{ marginLeft: 8 }}>{item.item.minuman}</Text>
         <Text style={{ marginLeft: 8 }}>{`Rp. ${item.item.total_harga}`}</Text>
+        <Text style={{ marginLeft: 8 }}>{moment(date).local().locale('id').format('dddd, DD-MM-YYYY')}</Text>
       </CardComponent>
     );
   }
@@ -40,7 +44,7 @@ class HomeScreen extends Component {
       <View style={{ flex: 1, padding: 8 }} >
         <FlatList
           data={this.props.hutang}
-          keyExtractor={(item) => item.index}
+          keyExtractor={(item) => item.nama}
           renderItem={this.renderItem.bind(this)}
           ListEmptyComponent={() => (
             <View style={{ alignItems: 'center', }}>
