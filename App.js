@@ -28,6 +28,7 @@ import reducers from './src/redux/reducers';
 import HomeScreen from './src/screens/HomeScreen';
 import CreateHutangScreen from './src/screens/CreateHutangScreen';
 import CreateDataScreen from './src/screens/CreateDataScreen';
+import HutangDetailScreen from './src/screens/HutangDetailScreen HutangDetailScreen';
 
 const ListStack = createStackNavigator({
   List: {
@@ -44,6 +45,12 @@ const ListStack = createStackNavigator({
   },
   CreateData: {
     screen: CreateDataScreen,
+    navigationOptions: () => ({
+      headerTitle: 'Tambah Data'
+    })
+  },
+  HutangDetail: {
+    screen: HutangDetailScreen,
     navigationOptions: () => ({
       headerTitle: 'Tambah Data'
     })
