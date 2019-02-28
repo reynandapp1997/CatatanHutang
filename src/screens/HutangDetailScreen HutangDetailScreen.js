@@ -93,7 +93,7 @@ class HutangDetailScreen extends Component {
             </View>
           )}
           ListHeaderComponent={(<Text style={{ color: 'black', fontSize: 24, marginLeft: 8 }}>{this.props.navigation.state.params.nama}</Text>)}
-          ListFooterComponent={(<Text style={{ color: 'black', fontSize: 18, marginLeft: 8 }}>{`Subtotal = Rp. ${subTotal.reduce((total, num) => total + num)}`}</Text>)}
+          ListFooterComponent={(<Text style={{ color: 'black', fontSize: 18, marginLeft: 8 }}>{`Subtotal = Rp. ${(subTotal.reduce((total, num) => total + num)).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`}</Text>)}
         />
         <Button title='Hapus Data' onPress={() => this.hapusData()} />
       </View>
