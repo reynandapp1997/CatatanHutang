@@ -149,7 +149,7 @@ class CreateDataScreen extends Component {
           <FlatList
             data={this.state.dataAnak.anak}
             renderItem={this.renderItem.bind(this)}
-            keyExtractor={item => item.index}
+            keyExtractor={item => item}
           />
           <Text style={{ fontSize: 24, color: 'black', marginBottom: 16 }}>Tambah Data Anak</Text>
           <Text style={styles.label}>Nama</Text>
@@ -166,7 +166,7 @@ class CreateDataScreen extends Component {
           <FlatList
             data={this.state.dataMakanan.makanan}
             renderItem={this.renderItem.bind(this)}
-            keyExtractor={item => item.index}
+            keyExtractor={item => item}
           />
           <Text style={{ fontSize: 24, color: 'black', marginBottom: 16 }}>Tambah Data Makanan</Text>
           <Text style={styles.label}>Makanan</Text>
@@ -183,7 +183,7 @@ class CreateDataScreen extends Component {
           <FlatList
             data={this.state.dataMinuman.minuman}
             renderItem={this.renderItem.bind(this)}
-            keyExtractor={item => item.index}
+            keyExtractor={item => item}
           />
           <Text style={{ fontSize: 24, color: 'black', marginBottom: 16 }}>Tambah Data Minuman</Text>
           <Text style={styles.label}>Minuman</Text>
