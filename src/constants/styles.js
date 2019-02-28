@@ -11,6 +11,10 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 20,
     marginVertical: 16
   },
+  nama: {
+    color: 'black',
+    fontSize: 24
+  },
   label: {
     color: 'black',
     fontSize: 16
