@@ -124,7 +124,7 @@ class CreateHutangScreen extends Component {
             <Picker.Item key='default' label='Pilih Anak' value='' />
             {this.state.dataAnak.anak.map((anak, index) => (
                 <Picker.Item key={index} label={anak} value={anak} />
-              ))}
+            ))}
           </Picker>
         </View>
         <View>
