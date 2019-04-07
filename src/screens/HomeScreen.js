@@ -4,7 +4,9 @@ import React, {
 import {
   View,
   FlatList,
-  Text
+  Text,
+  AsyncStorage,
+  Picker
 } from 'react-native';
 import ActionButton from 'react-native-action-button';
 import IconFa from 'react-native-vector-icons/FontAwesome';
@@ -17,12 +19,26 @@ import CardComponent from '../components/CardComponent';
 import { getHutang } from '../redux/actions';
 
 class HomeScreen extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      dataAnak: {
+        anak: []
+      },
+      selected: ''
+    };
+  }
+
   componentDidMount() {
     this.getData();
   }
 
-  getData() {
+  async getData() {
     this.props.getHutang();
+    const dataAnak = await AsyncStorage.getItem('dataAnak');
+    if (dataAnak) {
+      await this.setState({ dataAnak: JSON.parse(dataAnak) });
+    }
   }
 
   renderItem(item) {
@@ -40,10 +56,25 @@ class HomeScreen extends Component {
   }
 
   render() {
+    let data;
+    if (this.state.selected) {
+      data = Object.values(this.props.hutang).filter(value => value.nama === this.state.selected);
+    } else {
+      data = this.props.hutang;
+    }    
     return (
       <View style={{ flex: 1, padding: 8 }} >
+          <Picker
+            selectedValue={this.state.selected}
+            onValueChange={(itemValue) => this.setState({ selected: itemValue })}
+          >
+            <Picker.Item key='default' label='Pilih Anak' value='' />
+            {this.state.dataAnak.anak.map((anak, index) => (
+                <Picker.Item key={index} label={anak} value={anak} />
+            ))}
+          </Picker>
         <FlatList
-          data={this.props.hutang}
+          data={data}
           keyExtractor={(item) => item.createdAt}
           renderItem={this.renderItem.bind(this)}
           ListEmptyComponent={() => (
